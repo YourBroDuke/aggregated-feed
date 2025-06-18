@@ -1,0 +1,42 @@
+[
+  {
+    "id": "zhihu",
+    "name": "知乎",
+    "icon": "/images/zhihu-icon.png",
+    "color": "#0084ff",
+    "backgroundColor": "#e6f4ff",
+    "domain": "zhihu.com"
+  },
+  {
+    "id": "xiaohongshu",
+    "name": "小红书",
+    "icon": "/images/xiaohongshu-icon.png",
+    "color": "#ff2442",
+    "backgroundColor": "#ffebee",
+    "domain": "xiaohongshu.com"
+  },
+  {
+    "id": "bilibili",
+    "name": "哔哩哔哩",
+    "icon": "/images/bilibili-icon.png",
+    "color": "#00a1d6",
+    "backgroundColor": "#e3f2fd",
+    "domain": "bilibili.com"
+  },
+  {
+    "id": "twitter",
+    "name": "Twitter",
+    "icon": "/images/twitter-icon.jpg",
+    "color": "#1da1f2",
+    "backgroundColor": "#e3f2fd",
+    "domain": "twitter.com"
+  },
+  {
+    "id": "youtube",
+    "name": "YouTube",
+    "icon": "/images/youtube-icon.png",
+    "color": "#ff0000",
+    "backgroundColor": "#ffebee",
+    "domain": "youtube.com"
+  }
+]

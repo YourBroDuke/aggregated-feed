@@ -1,0 +1,132 @@
+[
+  {
+    "id": "1",
+    "title": "探讨前端架构的演进历程，从jQuery到React/Vue，再到微前端架构的技术变革。",
+    "platform": "zhihu",
+    "author": {
+      "name": "技术探索者",
+      "avatar": "/images/avatar-placeholder.jpg",
+      "username": "tech_explorer"
+    },
+    "content": "最近在研究前端架构的演进趋势，从传统的jQuery时代到现在的React、Vue等框架，再到最新的微前端架构。每一次技术变革都带来了开发效率的提升和用户体验的改善。特别是现在的组件化开发模式，让代码复用和维护变得更加简单。",
+    "originalUrl": "https://zhihu.com/question/12345678",
+    "postedAt": "2025-06-08T16:45:00Z"
+  },
+  {
+    "id": "2",
+    "title": "分享新发现的日式料理店体验，推荐三文鱼刺身和招牌寿司拼盘。",
+    "platform": "xiaohongshu",
+    "author": {
+      "name": "美食日记小姐姐",
+      "avatar": "/images/avatar-placeholder.jpg",
+      "username": "foodie_diary"
+    },
+    "content": "今天尝试了一家新开的日式料理店！环境超级棒，服务也很贴心。特别推荐他们家的三文鱼刺身，新鲜度满分！还有招牌寿司拼盘，摆盘精美，味道层次丰富。价格虽然偏高，但是食材品质确实很好，偶尔来享受一下还是值得的。",
+    "originalUrl": "https://xiaohongshu.com/explore/12345678",
+    "postedAt": "2025-06-08T16:30:00Z"
+  },
+  {
+    "id": "3",
+    "platform": "bilibili",
+    "title": "程序员阿志更新TypeScript教程第五集，重点讲解泛型的使用技巧和实战案例。",
+    "author": {
+      "name": "程序员阿志",
+      "avatar": "/images/avatar-placeholder.jpg",
+      "username": "programmer_azhi"
+    },
+    "content": "新视频更新！《从零开始学习TypeScript》第五集已经上线了！这一集我们来深入了解泛型的使用技巧。泛型是TypeScript中最强大的特性之一，能够让我们编写更加灵活和可复用的代码。视频中包含了大量的实战案例，相信对大家会很有帮助。",
+    "originalUrl": "https://bilibili.com/video/BV12345678",
+    "postedAt": "2025-06-08T16:15:00Z"
+  },
+  {
+    "id": "4",
+    "title": "OpenAI发布新模型，在编程任务和数学问题解决方面显著改进，可能改变AI辅助开发。",
+    "platform": "twitter",
+    "author": {
+      "name": "Tech Insider",
+      "avatar": "/images/avatar-placeholder.jpg",
+      "username": "tech_insider"
+    },
+    "content": "Breaking: OpenAI just announced their latest model with improved reasoning capabilities! The benchmarks are showing significant improvements in coding tasks and mathematical problem solving. This could be a game-changer for AI-assisted development. Can't wait to try it out! #AI #OpenAI #TechNews",
+    "originalUrl": "https://twitter.com/tech_insider/status/12345678",
+    "postedAt": "2025-06-08T16:00:00Z"
+  },
+  {
+    "id": "5",
+    "title": "Figma移动应用界面设计教程，包含完整设计流程和实用技巧分享。",
+    "platform": "youtube",
+    "author": {
+      "name": "创意设计师小王",
+      "avatar": "/images/avatar-placeholder.jpg",
+      "username": "creative_designer_wang"
+    },
+    "content": "最新设计教程来了！今天教大家如何使用Figma设计现代化的移动应用界面。从线框图到高保真原型，完整的设计流程分享。还会讲解一些实用的设计技巧，比如如何选择合适的配色方案、字体搭配等。视频时长约30分钟，干货满满！",
+    "originalUrl": "https://youtube.com/watch?v=abc123456",
+    "postedAt": "2025-06-08T15:45:00Z"
+  },
+  {
+    "id": "6",
+    "title": "产品经理分享用户调研方法，强调通过多种方式理解用户需求的重要性。",
+    "platform": "zhihu",
+    "author": {
+      "name": "产品经理小李",
+      "avatar": "/images/avatar-placeholder.jpg",
+      "username": "pm_xiaoli"
+    },
+    "content": "作为一名产品经理，我想分享一下如何进行有效的用户调研。很多时候我们容易陷入自己的假设中，而忽略了真实用户的需求。通过深度访谈、问卷调查、用户行为分析等多种方式，我们可以更好地理解用户痛点，设计出真正有价值的产品功能。",
+    "originalUrl": "https://zhihu.com/question/87654321",
+    "postedAt": "2025-06-08T15:30:00Z"
+  },
+  {
+    "id": "7",
+    "title": "健身达人分享三个月减重7kg的成功经验，强调训练计划和坚持的重要性。",
+    "platform": "xiaohongshu",
+    "author": {
+      "name": "健身达人Amy",
+      "avatar": "/images/avatar-placeholder.jpg",
+      "username": "fitness_amy"
+    },
+    "content": "坚持健身三个月的变化记录！从最开始的体重65kg到现在的58kg，不仅体重下降了，整个人的精神状态也好了很多。分享一下我的训练计划：每周4次力量训练+2次有氧运动，配合合理的饮食控制。最重要的是要坚持，不要期望一夜之间就有巨大变化。",
+    "originalUrl": "https://xiaohongshu.com/explore/87654321",
+    "postedAt": "2025-06-08T15:15:00Z"
+  },
+  {
+    "id": "8",
+    "platform": "bilibili",
+    "title": "通过3D建模还原唐代长安城建筑布局，展现盛唐时期国际大都市的震撼面貌。",
+    "author": {
+      "name": "历史文化频道",
+      "avatar": "/images/avatar-placeholder.jpg",
+      "username": "history_culture"
+    },
+    "content": "【文化探索】唐代长安城的建筑布局有多震撼？本期视频带大家穿越回1300年前，看看那个时代的国际大都市是什么样子。从宫城到皇城，从东市到西市，每一个区域都有其独特的功能和意义。通过3D建模还原，让我们一起感受盛唐的辉煌！",
+    "originalUrl": "https://bilibili.com/video/BV87654321",
+    "postedAt": "2025-06-08T15:00:00Z"
+  },
+  {
+    "id": "9",
+    "title": "创业公司获得500万美元A轮融资，将用于扩展AI驱动的生产力平台。",
+    "platform": "twitter",
+    "author": {
+      "name": "Startup Founder",
+      "avatar": "/images/avatar-placeholder.jpg",
+      "username": "startup_founder"
+    },
+    "content": "Just closed our Series A! 🎉 $5M to scale our AI-powered productivity platform. Huge thanks to our investors, team, and early users who believed in our vision. The journey from idea to funding has been incredible. Now the real work begins - time to build something amazing! #startup #funding #AI",
+    "originalUrl": "https://twitter.com/startup_founder/status/87654321",
+    "postedAt": "2025-06-08T14:45:00Z"
+  },
+  {
+    "id": "10",
+    "title": "料理研究家分享米其林级别红烧肉制作方法，详解糖色调制和火候控制技巧。",
+    "platform": "youtube",
+    "author": {
+      "name": "料理研究家",
+      "avatar": "/images/avatar-placeholder.jpg",
+      "username": "cooking_researcher"
+    },
+    "content": "家常菜也能做出米其林的味道！今天教大家制作经典的红烧肉，关键在于糖色的调制和火候的控制。选用五花肉，肥瘦相间，经过焯水、炒糖色、慢炖等步骤，最终呈现出色泽红亮、入口即化的完美红烧肉。配菜推荐土豆和胡萝卜，吸收肉汁后同样美味。",
+    "originalUrl": "https://youtube.com/watch?v=def789012",
+    "postedAt": "2025-06-08T14:30:00Z"
+  }
+]

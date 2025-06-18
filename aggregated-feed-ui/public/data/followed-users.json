@@ -1,0 +1,102 @@
+[
+  {
+    "id": "1",
+    "platform": "zhihu",
+    "username": "tech_explorer",
+    "name": "技术探索者",
+    "avatar": "https://picx.zhimg.com/v2-51c8b9a4766249631518e4cac6ab4b9e_xl.jpg?source=32738c0c&needBackground=1",
+    "description": "专注前端技术分享，10年开发经验",
+    "profileUrl": "https://zhihu.com/people/tech_explorer",
+    "followedAt": "2025-05-15T10:30:00Z"
+  },
+  {
+    "id": "2",
+    "platform": "zhihu",
+    "username": "pm_xiaoli",
+    "name": "产品经理小李",
+    "avatar": "/images/avatar-placeholder.jpg",
+    "description": "产品设计与用户体验研究",
+    "profileUrl": "https://zhihu.com/people/pm_xiaoli",
+    "followedAt": "2025-05-20T14:20:00Z"
+  },
+  {
+    "id": "3",
+    "platform": "xiaohongshu",
+    "username": "foodie_diary",
+    "name": "美食日记小姐姐",
+    "avatar": "/images/avatar-placeholder.jpg",
+    "description": "美食探店达人，分享生活美好",
+    "profileUrl": "https://xiaohongshu.com/user/profile/foodie_diary",
+    "followedAt": "2025-05-18T09:15:00Z"
+  },
+  {
+    "id": "4",
+    "platform": "xiaohongshu",
+    "username": "fitness_amy",
+    "name": "健身达人Amy",
+    "avatar": "/images/avatar-placeholder.jpg",
+    "description": "健身教练，分享健康生活方式",
+    "profileUrl": "https://xiaohongshu.com/user/profile/fitness_amy",
+    "followedAt": "2025-05-22T16:45:00Z"
+  },
+  {
+    "id": "5",
+    "platform": "bilibili",
+    "username": "programmer_azhi",
+    "name": "程序员阿志",
+    "avatar": "/images/avatar-placeholder.jpg",
+    "description": "编程教学UP主，TypeScript专家",
+    "profileUrl": "https://space.bilibili.com/programmer_azhi",
+    "followedAt": "2025-05-12T11:30:00Z"
+  },
+  {
+    "id": "6",
+    "platform": "bilibili",
+    "username": "history_culture",
+    "name": "历史文化频道",
+    "avatar": "/images/avatar-placeholder.jpg",
+    "description": "专业历史文化内容创作者",
+    "profileUrl": "https://space.bilibili.com/history_culture",
+    "followedAt": "2025-05-25T13:20:00Z"
+  },
+  {
+    "id": "7",
+    "platform": "twitter",
+    "username": "tech_insider",
+    "name": "Tech Insider",
+    "avatar": "/images/avatar-placeholder.jpg",
+    "description": "Technology trends and industry insights",
+    "profileUrl": "https://twitter.com/tech_insider",
+    "followedAt": "2025-05-14T08:45:00Z"
+  },
+  {
+    "id": "8",
+    "platform": "twitter",
+    "username": "startup_founder",
+    "name": "Startup Founder",
+    "avatar": "/images/avatar-placeholder.jpg",
+    "description": "Building the future, one startup at a time",
+    "profileUrl": "https://twitter.com/startup_founder",
+    "followedAt": "2025-05-28T15:30:00Z"
+  },
+  {
+    "id": "9",
+    "platform": "youtube",
+    "username": "creative_designer_wang",
+    "name": "创意设计师小王",
+    "avatar": "/images/avatar-placeholder.jpg",
+    "description": "UI/UX设计教程，创意设计分享",
+    "profileUrl": "https://youtube.com/@creative_designer_wang",
+    "followedAt": "2025-05-16T12:15:00Z"
+  },
+  {
+    "id": "10",
+    "platform": "youtube",
+    "username": "cooking_researcher",
+    "name": "料理研究家",
+    "avatar": "/images/avatar-placeholder.jpg",
+    "description": "专业料理技巧分享，美食文化探索",
+    "profileUrl": "https://youtube.com/@cooking_researcher",
+    "followedAt": "2025-05-30T17:00:00Z"
+  }
+]

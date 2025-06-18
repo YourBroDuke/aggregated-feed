@@ -1,0 +1,22 @@
+services:
+  agd-feed-be:
+    build: .
+    container_name: agd-feed-be
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: agduser
+      MONGO_INITDB_ROOT_PASSWORD: agdpass
+      MONGO_INITDB_DATABASE: agd_feed
+    ports:
+      - "5670:27017"
+    volumes:
+      - mongo_data:/data/db
+volumes:
+  mongo_data: 

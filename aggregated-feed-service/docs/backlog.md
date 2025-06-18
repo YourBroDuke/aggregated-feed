@@ -1,0 +1,1 @@
+- for relational db, we need to decouple the feedItem's user fields, extract it out. only need 1 field: userId

@@ -1,0 +1,6 @@
+ignoredBuiltDependencies:
+  - '@prisma/client'
+  - '@prisma/engines'
+  - isolated-vm
+  - prisma
+  - unrs-resolver
