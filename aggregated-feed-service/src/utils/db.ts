@@ -4,7 +4,7 @@ import { Platform } from '../models/Platform.js';
 export async function connectDB() {
   const uri = process.env.MONGODB_URI;
   if (!uri) {
-    throw new Error('请在环境变量中设置MONGODB_URI');
+    throw new Error('Please set MONGODB_URI in environment variables');
   }
 
   try {
