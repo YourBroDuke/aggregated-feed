@@ -8,7 +8,7 @@ export default async function routes(fastify: FastifyInstance, options: any) {
   // 获取关注用户列表
   fastify.get('/api/followed-users', async (request, reply) => {
     const followedUsers = await userService.getFollowedUsers();
-    return followedUsers;
+    reply.send(followedUsers);
   });
 
   // 添加关注用户
@@ -16,13 +16,13 @@ export default async function routes(fastify: FastifyInstance, options: any) {
     const { profileUrl } = request.body as { profileUrl: string };
     if (!profileUrl) return reply.code(400).send({ error: 'profileUrl required' });
     const followedUser = await userService.addFollowedUser(profileUrl);
-    return followedUser;
+    reply.send(followedUser);
   });
 
   // 取消关注用户
   fastify.delete('/api/followed-users/:userId', async (request, reply) => {
     const { userId } = request.params as { userId: string };
     const result = await userService.removeFollowedUser(userId);
-    return result;
+    reply.send(result);
   });
 } 

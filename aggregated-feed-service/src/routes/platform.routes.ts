@@ -7,6 +7,6 @@ export default async function routes(fastify: FastifyInstance, options: any) {
 
   fastify.get('/api/platforms', async (request, reply) => {
     const platforms = await platformService.getPlatforms();
-    return platforms;
+    reply.send(platforms);
   });
 } 

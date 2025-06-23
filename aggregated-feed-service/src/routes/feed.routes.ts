@@ -16,6 +16,6 @@ export default async function routes(fastify: FastifyInstance, options: any) {
       pageSize: query.pageSize ? parseInt(query.pageSize) : 20,
     };
     const items: FeedItemDTO[] = await feedService.getFeedItems(params);
-    return items;
+    reply.send(items);
   });
 } 
