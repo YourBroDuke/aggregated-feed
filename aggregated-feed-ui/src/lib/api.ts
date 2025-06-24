@@ -1,6 +1,6 @@
 import { Platform, FeedItem, FollowedUser } from '@/types';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'http://localhost:4000/api';
 
 // 默认值常量
 const DEFAULT_NAME = "anonymous-fish";

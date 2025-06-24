@@ -3,7 +3,7 @@ services:
     build: .
     container_name: agd-feed-be
     ports:
-      - "4000:3000"
+      - "4000:4000"
     depends_on:
       - mongo
   mongo:

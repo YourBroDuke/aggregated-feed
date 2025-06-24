@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json ./
 
 # 安装 pnpm
-RUN npm install -g pnpm@10.12.1 --registry=https://registry.npmmirror.com
+RUN npm install -g pnpm@10.12.1 --registry=https://registry.npmmirror.com --no-proxy
 
 # 安装依赖
 RUN pnpm install --frozen-lockfile --reporter=default
