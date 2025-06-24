@@ -1,18 +1,10 @@
 import { ICrawler } from '../crawlers/base/crawler.js';
 
 export class CrawlerService {
-  private static instance: CrawlerService;
   private crawlers: Map<string, ICrawler>;
 
-  private constructor() {
+  constructor() {
     this.crawlers = new Map();
-  }
-
-  public static getInstance(): CrawlerService {
-    if (!CrawlerService.instance) {
-      CrawlerService.instance = new CrawlerService();
-    }
-    return CrawlerService.instance;
   }
 
   registerCrawler(platform: string, crawler: ICrawler): void {

@@ -1,13 +1,13 @@
-import { CrawlerService } from './crawler.service.js';
+import { FastifyInstance } from 'fastify';
 import { FollowedUser } from '../models/FollowedUser.js';
 import { FeedItem } from '../models/FeedItem.js';
 import mongoose from 'mongoose';
 
 export class SyncService {
-  constructor(private crawlerService: CrawlerService) {}
+  constructor(private fastify: FastifyInstance) {}
 
   async syncCookie() {
-    this.crawlerService.syncCookies();
+    this.fastify.crawlerService.syncCookies();
   }
 
   async syncUserProfile(userId: mongoose.Types.ObjectId): Promise<void> {
@@ -16,7 +16,7 @@ export class SyncService {
       throw new Error(`User not found: ${userId}`);
     }
 
-    const crawler = this.crawlerService.getCrawler(user.platform);
+    const crawler = this.fastify.crawlerService.getCrawler(user.platform);
     const profile = await crawler.fetchUserProfile(user.profileUrl);
 
     user.name = profile.name;
@@ -36,7 +36,7 @@ export class SyncService {
       throw new Error(`User not found: ${userId}`);
     }
 
-    const crawler = this.crawlerService.getCrawler(user.platform);
+    const crawler = this.fastify.crawlerService.getCrawler(user.platform);
     const { posts, cursor } = await crawler.fetchLatestPosts(user.profileUrl, user.syncCursor || "");
 
     for (const post of posts) {
@@ -67,8 +67,7 @@ export class SyncService {
         await this.syncUserProfile(user._id);
       } catch (error) {
         console.error(`Failed to sync profile for user ${user._id}:`, error);
-        user.syncStatus = 'failed';
-        await user.save();
+        await FollowedUser.updateOne({ _id: user._id }, { $set: { syncStatus: 'failed' } });
       }
     }
   }
@@ -80,8 +79,6 @@ export class SyncService {
         await this.syncUserFeeds(user._id);
       } catch (error) {
         console.error(`Failed to sync feeds for user ${user._id}:`, error);
-        user.syncStatus = 'failed';
-        await user.save();
       }
     }
   }
