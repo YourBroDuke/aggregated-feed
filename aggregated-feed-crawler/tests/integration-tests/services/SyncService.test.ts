@@ -1,20 +1,44 @@
+import { jest, describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from '@jest/globals';
 import mongoose from 'mongoose';
 import { connectDB, disconnectDB } from '../../../src/utils/db.js';
 import { SyncService } from '../../../src/services/sync.service.js';
 import { CrawlerService } from '../../../src/services/crawler.service.js';
 import { FollowedUser } from '../../../src/models/FollowedUser.js';
-import { XiaohongshuCrawler } from '../../../src/crawlers/xiaohongshu/xiaohongshu-crawler.js';
 import { FeedItem, IFeedItem } from '../../../src/models/FeedItem.js';
+import { ICrawler, UserProfile, Post } from '../../../src/crawlers/base/crawler.js';
+
+// Mock XiaohongshuCrawler
+const mockFetchUserProfile = jest.fn<(profileUrl: string) => Promise<UserProfile>>();
+const mockFetchLatestPosts = jest.fn<(profileUrl: string, cursor: string) => Promise<{ posts: Post[]; cursor: string }>>();
+const mockSyncCookie = jest.fn();
+
+const MockXiaohongshuCrawler = jest.fn().mockImplementation(() => ({
+  fetchUserProfile: mockFetchUserProfile,
+  fetchLatestPosts: mockFetchLatestPosts,
+  syncCookie: mockSyncCookie,
+}));
+
+// Mock the actual XiaohongshuCrawler import
+jest.mock('../../../src/crawlers/xiaohongshu/xiaohongshu-crawler.js', () => ({
+  XiaohongshuCrawler: MockXiaohongshuCrawler,
+}));
 
 describe('SyncService Integration Tests', () => {
   let syncService: SyncService;
-  let testUserId: mongoose.Types.ObjectId;
+  let mockCrawler: ICrawler;
 
   beforeAll(async () => {
     await connectDB();
-    const xiaohongshuCrawler = new XiaohongshuCrawler("abRequestId=12d67c77-c3b0-54dc-97dc-0ce87e04e92d; xsecappid=xhs-pc-web; a1=19555e764479hwh9d88g4uaklbsgdi4czahehdgk850000332233; webId=6f055f2110f421c2f0bd88d132f2daa9; gid=yj222dWKfju2yj222dWK40fk4WjxExjfYYk4xTY70T1DMd28kf34Sx888qqJJqq8W00W4qY0; webBuild=4.68.0; acw_tc=0a4acc4417502549314957828e69491f6e751e241f5637db41363223c8fe8a; websectiga=2a3d3ea002e7d92b5c9743590ebd24010cf3710ff3af8029153751e41a6af4a3; sec_poison_id=7d2a9c92-63d7-4b06-ab6b-f47637339b99; web_session=040069755df46f293e870c82673a4b4f9221da; loadts=1750256310189; unread={%22ub%22:%22683709a4000000002202a012%22%2C%22ue%22:%226848e00b000000002202704a%22%2C%22uc%22:29}");
+    
+    // Create mock crawler
+    mockCrawler = {
+      fetchUserProfile: mockFetchUserProfile,
+      fetchLatestPosts: mockFetchLatestPosts,
+      syncCookie: mockSyncCookie,
+    };
+
     const crawlerService = new CrawlerService();
-    crawlerService.registerCrawler('xiaohongshu', xiaohongshuCrawler);
+    crawlerService.registerCrawler('xiaohongshu', mockCrawler);
     
     // Create a mock fastify instance for testing
     const mockFastify = {
@@ -26,66 +50,166 @@ describe('SyncService Integration Tests', () => {
     } as any;
     
     syncService = new SyncService(mockFastify);
+  });
 
-    const testUser = await FollowedUser.create({
-      platform: 'xiaohongshu',
-      profileUrl: 'https://www.xiaohongshu.com/user/profile/65b62088000000000d01d5f9?xsec_token=ABGr3a7Fvra-zuhDlOlg4OW-sBDVzXLBxyWwpkXsdbHyY%3D',
-      followedAt: new Date(),
-    });
-    testUserId = testUser._id;
+  beforeEach(() => {
+    // Clear all mocks before each test
+    jest.clearAllMocks();
+  });
 
-    expect(testUser.name).toBeUndefined();
-    expect(testUser.username).toBeUndefined();
-    expect(testUser.avatar).toBeUndefined();
-    expect(testUser.syncStatus).toBeUndefined();
-    expect(testUser.syncCursor).toBeUndefined();
+  afterEach(async () => {
+    // Clean up test data after each test
+    await FollowedUser.deleteMany({});
+    await FeedItem.deleteMany({});
   });
 
   afterAll(async () => {
-    // Clean up test data
-    if (testUserId) {
-      await FollowedUser.findByIdAndDelete(testUserId);
-      await FeedItem.deleteMany({ 'author.userId': testUserId });
-    }
     await disconnectDB();
   });
 
   it('should sync user profile successfully', async () => {
+    // Create a unique test user for this test
+    const testUser = await FollowedUser.create({
+      platform: 'xiaohongshu',
+      profileUrl: 'https://www.xiaohongshu.com/user/profile/test-user-1?xsec_token=test-token-1',
+      followedAt: new Date(),
+    });
+    const testUserId = testUser._id;
+
+    expect(testUser.name).toBeUndefined();
+    expect(testUser.username).toBeUndefined();
+    expect(testUser.avatar).toBeUndefined();
+
+    // Mock the fetchUserProfile response
+    const mockUserProfile: UserProfile = {
+      name: 'Test User',
+      username: 'testuser',
+      avatar: 'https://example.com/avatar.jpg',
+    };
+    mockFetchUserProfile.mockResolvedValue(mockUserProfile);
+
     // Sync the user profile
     await syncService.syncUserProfile(testUserId);
+
+    // Verify the mock was called with correct parameters
+    expect(mockFetchUserProfile).toHaveBeenCalledWith(
+      'https://www.xiaohongshu.com/user/profile/test-user-1?xsec_token=test-token-1'
+    );
 
     // Verify the user profile was updated
     const updatedUser = await FollowedUser.findById(testUserId);
     console.log('Updated user:', updatedUser);
-    expect(updatedUser?.name).toBeDefined();
-    expect(updatedUser?.username).toBeDefined();
-    expect(updatedUser?.avatar).toBeDefined();
+    expect(updatedUser?.name).toBe('Test User');
+    expect(updatedUser?.username).toBe('testuser');
+    expect(updatedUser?.avatar).toBe('https://example.com/avatar.jpg');
     expect(updatedUser?.syncStatus).toBeUndefined();
     expect(updatedUser?.syncCursor).toBeUndefined();
-  }, 60000);
+  });
 
   it('should sync user feeds successfully', async () => {
+    // Create a unique test user for this test
+    const testUser = await FollowedUser.create({
+      platform: 'xiaohongshu',
+      profileUrl: 'https://www.xiaohongshu.com/user/profile/test-user-2?xsec_token=test-token-2',
+      followedAt: new Date(),
+    });
+    const testUserId = testUser._id;
+
+    // 先补充用户profile字段，模拟已同步profile
+    await FollowedUser.findByIdAndUpdate(testUserId, {
+      name: 'Test User 2',
+      username: 'testuser2',
+      avatar: 'https://example.com/avatar2.jpg',
+    });
+
+    // Mock the fetchLatestPosts response
+    const mockPosts: Post[] = [
+      {
+        businessId: 'xhs-test-post-1',
+        title: 'Test Post 1',
+        content: 'This is test content 1',
+        originalUrl: 'https://www.xiaohongshu.com/explore/test-post-1',
+        postedAt: new Date('2024-01-01T10:00:00Z'),
+      },
+      {
+        businessId: 'xhs-test-post-2',
+        title: 'Test Post 2',
+        content: 'This is test content 2',
+        originalUrl: 'https://www.xiaohongshu.com/explore/test-post-2',
+        postedAt: new Date('2024-01-02T10:00:00Z'),
+      },
+    ];
+    const mockCursor = 'next-cursor-value';
+    mockFetchLatestPosts.mockResolvedValue({ posts: mockPosts, cursor: mockCursor });
+
     // Sync the user feeds
     await syncService.syncUserFeeds(testUserId);
 
+    // Verify the mock was called with correct parameters
+    expect(mockFetchLatestPosts).toHaveBeenCalledWith(
+      'https://www.xiaohongshu.com/user/profile/test-user-2?xsec_token=test-token-2',
+      ''
+    );
+
     // Verify that feed items were created
     const feedItems = await FeedItem.find({ 'author.userId': testUserId });
-    expect(feedItems.length).toBeGreaterThan(0);
+    expect(feedItems.length).toBe(2);
 
     // Verify all the fields of feed items
-    feedItems.forEach((feedItem: IFeedItem) => {
+    feedItems.forEach((feedItem: IFeedItem, index: number) => {
       console.log(feedItem);
-      expect(feedItem.businessId).toBeDefined();
+      expect(feedItem.businessId).toBe(mockPosts[index].businessId);
       expect(feedItem.platform).toBe('xiaohongshu');
       expect(feedItem.author.userId.toString()).toEqual(testUserId.toString());
-      expect(feedItem.author.name).toBeDefined();
-      expect(feedItem.author.avatar).toBeDefined();
-      expect(feedItem.author.username).toBeDefined();
-      expect(feedItem.title).toBeDefined();
-      expect(feedItem.content).toBeDefined();
-      expect(feedItem.originalUrl).toContain('xiaohongshu.com');
-      expect(feedItem.originalUrl).toContain('https://www.xiaohongshu.com/');
-      expect(feedItem.postedAt).toBeDefined();
+      expect(feedItem.author.name).toBe('Test User 2');
+      expect(feedItem.author.avatar).toBe('https://example.com/avatar2.jpg');
+      expect(feedItem.author.username).toBe('testuser2');
+      expect(feedItem.title).toBe(mockPosts[index].title);
+      expect(feedItem.content).toBe(mockPosts[index].content);
+      expect(feedItem.originalUrl).toBe(mockPosts[index].originalUrl);
+      expect(feedItem.postedAt).toEqual(mockPosts[index].postedAt);
     });
-  }, 60000);
+
+    // Verify the cursor was updated
+    const updatedUser = await FollowedUser.findById(testUserId);
+    expect(updatedUser?.syncCursor).toBe(mockCursor);
+  });
+
+  it('should handle fetchUserProfile error gracefully', async () => {
+    // Create a unique test user for this test
+    const testUser = await FollowedUser.create({
+      platform: 'xiaohongshu',
+      profileUrl: 'https://www.xiaohongshu.com/user/profile/test-user-3?xsec_token=test-token-3',
+      followedAt: new Date(),
+    });
+    const testUserId = testUser._id;
+
+    // Mock the fetchUserProfile to throw an error
+    mockFetchUserProfile.mockRejectedValue(new Error('Network error'));
+
+    // Sync the user profile should throw an error
+    await expect(syncService.syncUserProfile(testUserId)).rejects.toThrow('Network error');
+
+    // Verify the mock was called
+    expect(mockFetchUserProfile).toHaveBeenCalled();
+  });
+
+  it('should handle fetchLatestPosts error gracefully', async () => {
+    // Create a unique test user for this test
+    const testUser = await FollowedUser.create({
+      platform: 'xiaohongshu',
+      profileUrl: 'https://www.xiaohongshu.com/user/profile/test-user-4?xsec_token=test-token-4',
+      followedAt: new Date(),
+    });
+    const testUserId = testUser._id;
+
+    // Mock the fetchLatestPosts to throw an error
+    mockFetchLatestPosts.mockRejectedValue(new Error('API error'));
+
+    // Sync the user feeds should throw an error
+    await expect(syncService.syncUserFeeds(testUserId)).rejects.toThrow('API error');
+
+    // Verify the mock was called
+    expect(mockFetchLatestPosts).toHaveBeenCalled();
+  });
 });
