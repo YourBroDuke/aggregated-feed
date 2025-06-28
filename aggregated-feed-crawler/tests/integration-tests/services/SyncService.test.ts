@@ -1,5 +1,4 @@
 import { jest, describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from '@jest/globals';
-import mongoose from 'mongoose';
 import { connectDB, disconnectDB } from '../../../src/utils/db.js';
 import { SyncService } from '../../../src/services/sync.service.js';
 import { FollowedUser } from '../../../src/models/FollowedUser.js';

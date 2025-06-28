@@ -8,4 +8,12 @@ export default {
   },
   testMatch: ['**/tests/**/*.test.ts'],
   setupFiles: ['dotenv/config'],
+  transformIgnorePatterns: [
+    'node_modules/(?!(.*\\.mjs$))'
+  ],
+  transform: {
+    '^.+\\.ts$': ['ts-jest', {
+      useESM: true,
+    }],
+  },
 }; 
