@@ -9,7 +9,8 @@
     "build": "tsc && cp -r src/crawlers/xiaohongshu/scripts dist/crawlers/xiaohongshu/",
     "start": "node dist/index.js",
     "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test:watch": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
+    "test:watch": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "test:cookie-sync": "NODE_OPTIONS='--loader ts-node/esm' ts-node src/test-cookie-sync.ts"
   },
   "dependencies": {
     "@fastify/cors": "^11.0.1",
@@ -17,9 +18,12 @@
     "dotenv": "^16.4.5",
     "fastify": "^5.3.3",
     "fastify-plugin": "^5.0.1",
+    "jimp": "^1.6.0",
     "jsdom": "^26.1.0",
     "mongoose": "^8.15.1",
-    "node-cron": "^4.1.0"
+    "node-cron": "^4.1.0",
+    "playwright": "^1.53.1",
+    "terminal-image": "^3.1.1"
   },
   "devDependencies": {
     "@jest/globals": "^30.0.0",

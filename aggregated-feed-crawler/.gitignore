@@ -60,3 +60,7 @@ temp/
 # python
 .venv
 **/__pycache__/
+
+# Browser session data
+data/
+browser-session.json

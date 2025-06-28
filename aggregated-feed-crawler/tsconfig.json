@@ -10,11 +10,11 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "types": ["node", "jest"],
+    "types": ["node", "jest", "jimp", "qrcode-terminal", "playwright"],
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
     "allowJs": true
   },
-  "include": ["src/**/*", "tests/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "tests"]
 } 

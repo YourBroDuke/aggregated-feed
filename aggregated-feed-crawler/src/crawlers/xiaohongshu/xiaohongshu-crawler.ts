@@ -2,18 +2,55 @@ import axios from 'axios';
 import { ICrawler, UserProfile, Post } from '../base/crawler.js';
 import { parse } from 'url';
 import { generateRequestParams } from './sign.js';
+import { BrowserManager } from '../../utils/browser-manager.js';
+import * as path from 'path';
 
 export class XiaohongshuCrawler implements ICrawler {
   private backEndUrl = 'https://edith.xiaohongshu.com';
   private cookies: string;
+  private browserManager: BrowserManager;
 
-  constructor(cookies: string) {
+  constructor(cookies: string = '') {
     this.cookies = cookies;
+    // 数据目录相对于项目根目录
+    const dataDir = path.join(process.cwd(), 'data');
+    this.browserManager = new BrowserManager(dataDir);
   }
 
-  public syncCookie(): void {
-    // TODO: implement the logic to sync the cookie
-    this.cookies = "";
+  public async syncCookie(): Promise<void> {
+    try {
+      console.log('开始同步小红书cookie...');
+      
+      // 初始化浏览器
+      await this.browserManager.initBrowser();
+      
+      // 获取最新的cookies
+      const newCookies = await this.browserManager.getXiaohongshuCookies();
+      
+      if (newCookies) {
+        this.cookies = newCookies;
+        console.log('Cookie同步成功！');
+        console.log('新Cookie长度:', newCookies.length);
+      } else {
+        throw new Error('未能获取到有效的cookie');
+      }
+    } catch (error) {
+      console.error('Cookie同步失败:', error);
+      throw error;
+    } finally {
+      // 关闭浏览器
+      await this.browserManager.close();
+    }
+  }
+
+  // 添加一个方法来获取当前的cookies（用于调试）
+  public getCurrentCookies(): string {
+    return this.cookies;
+  }
+
+  // 添加一个方法来手动设置cookies（保持向后兼容）
+  public setCookies(cookies: string): void {
+    this.cookies = cookies;
   }
 
   private async makeRequest(url: string = this.backEndUrl, api: string, method: 'GET' | 'POST' = 'GET', data?: any) {
