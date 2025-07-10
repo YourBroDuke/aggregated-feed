@@ -92,7 +92,6 @@ export class BrowserManager {
 
     // 访问小红书主页
     await this.page.goto('https://www.xiaohongshu.com', { waitUntil: 'domcontentloaded', timeout: 60000 });
-    await this.page.waitForTimeout(10000);
 
     // 检查是否已经登录
     const isLoggedIn = await this.checkLoginStatus();
@@ -121,7 +120,7 @@ export class BrowserManager {
 
     try {
       // 等待页面加载完成
-      await this.page.waitForTimeout(2000);
+      await this.page.waitForTimeout(5000);
       
       const loginButton = await this.page.$('#login-btn.reds-button-new.login-btn');
       return loginButton === null;

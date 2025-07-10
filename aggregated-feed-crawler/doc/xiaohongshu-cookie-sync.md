@@ -103,7 +103,8 @@ volumes:
 ```bash
 # 确保安装了playwright浏览器
 npx playwright install chromium
-sudo pnpm exec playwright install-deps
+pnpm exec playwright install-deps
+pnpm exec playwright install
 ```
 
 ### 2. 登录超时

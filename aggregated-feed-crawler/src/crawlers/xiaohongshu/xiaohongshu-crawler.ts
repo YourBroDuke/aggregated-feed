@@ -7,30 +7,26 @@ import * as path from 'path';
 
 export class XiaohongshuCrawler implements ICrawler {
   private backEndUrl = 'https://edith.xiaohongshu.com';
-  private cookies: string;
+  private cookies: string = "";
   private browserManager: BrowserManager;
+  private syncCookiePromise: Promise<void> | null = null;
 
-  constructor(cookies: string = '') {
-    this.cookies = cookies;
+  constructor() {
     // 数据目录相对于项目根目录
     const dataDir = path.join(process.cwd(), 'data');
     this.browserManager = new BrowserManager(dataDir);
   }
 
-  public async syncCookie(): Promise<void> {
+  private async doSyncCookie(): Promise<void> {
     try {
       console.log('开始同步小红书cookie...');
-      
       // 初始化浏览器
       await this.browserManager.initBrowser();
-      
       // 获取最新的cookies
       const newCookies = await this.browserManager.getXiaohongshuCookies();
-      
       if (newCookies) {
         this.cookies = newCookies;
         console.log('Cookie同步成功！');
-        console.log('新Cookie长度:', newCookies.length);
       } else {
         throw new Error('未能获取到有效的cookie');
       }
@@ -43,14 +39,19 @@ export class XiaohongshuCrawler implements ICrawler {
     }
   }
 
+  public async syncCookie(): Promise<void> {
+    if (this.syncCookiePromise) {
+      return this.syncCookiePromise;
+    }
+    this.syncCookiePromise = this.doSyncCookie().finally(() => {
+      this.syncCookiePromise = null;
+    });
+    return this.syncCookiePromise;
+  }
+
   // 添加一个方法来获取当前的cookies（用于调试）
   public getCurrentCookies(): string {
     return this.cookies;
-  }
-
-  // 添加一个方法来手动设置cookies（保持向后兼容）
-  public setCookies(cookies: string): void {
-    this.cookies = cookies;
   }
 
   private async makeRequest(url: string = this.backEndUrl, api: string, method: 'GET' | 'POST' = 'GET', data?: any) {
@@ -104,6 +105,7 @@ export class XiaohongshuCrawler implements ICrawler {
     const api = this.extractApiPathAndQuery(profileUrl);
     
     try {
+      this.syncCookie();
       const response = await this.makeRequest(this.backEndUrl, api);
       if (!response.success) {
         throw new Error(response.msg || 'Failed to fetch user profile');
